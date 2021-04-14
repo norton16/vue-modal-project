@@ -4,9 +4,19 @@
   <h1>{{ title }}</h1>
   <input type="text" ref="name">
   <button @click="handleClick">Click me</button>
-  <div v-if="showModal">
-    <Modal :header="header" :header2="header2" theme="sale"/>
-  </div>
+  <!-- Teleport - move div somewhere else in DOM -->
+  <teleport to=".modals" v-if="showModal">
+    <Modal :header="header" :header2="header2" theme="sale" @close="toggleModal">
+      <!-- Slots - pass templates to components -->
+      <h1>Slot title</h1>
+      <p>slot text</p>
+      <!-- Named Slot - output slot in different areas -->
+      <template v-slot:links>
+        <a href="#">Sign up</a>
+        <a href="#">More info</a>
+      </template>
+    </Modal>
+  </teleport>
   <button @click="toggleModal">Show modal</button>
 </template>
 
@@ -41,7 +51,7 @@ export default {
 </script>
 
 <style>
-#app {
+#app, .modals {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

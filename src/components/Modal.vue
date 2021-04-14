@@ -1,10 +1,17 @@
 <template>
-    <div class="backdrop" @click="closeModal">
+    <!-- Click event modifier - only close modal when backdrop clicked -->
+    <div class="backdrop" @click.self="closeModal">
         <!-- Class is sale if theme prop = 'sale' -->
         <div class="modal" :class="{ sale: theme === 'sale' }">
             <h1>Modal Content</h1>
             <p>{{ header }}</p>
             <p>{{ header2 }}</p>
+            <!-- Taking in slot -->
+            <slot></slot>
+            <div class="named-slot-div">
+                <!-- Taking in named slot -->
+                <slot name="links"></slot>
+            </div>
         </div>
     </div>
 </template>
